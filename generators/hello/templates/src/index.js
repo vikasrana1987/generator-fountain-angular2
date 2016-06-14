@@ -10,6 +10,10 @@ var uiRouter = require('ui-router-ng2');
 var ngCommon = require('@angular/common');
 var ngPlatformBrowser = require('@angular/platform-browser');
 var MyUIRouterConfig = require('./routes');
+<% } else if (router === 'router') { -%>
+var ngRouter = require('@angular/router');
+var routes = require('./routes').routes;
+var Root = require('./routes').Root;
 <% } else { -%>
 var Hello = require('./app/hello');
 <% } -%>
@@ -31,6 +35,10 @@ ng.bootstrap(uiRouter.UiView, uiRouter.UIROUTER_PROVIDERS.concat([
   ngCore.provide(ngCommon.PlatformLocation, {useClass: ngPlatformBrowser.BrowserPlatformLocation}),
   ngCore.provide(uiRouter.UIRouterConfig, {useClass: MyUIRouterConfig})
 ]));
+<% } else if (router === 'router') { -%>
+ng.bootstrap(Root, [
+  ngRouter.provideRouter(routes)
+]);
 <% } else { -%>
 ng.bootstrap(Hello);
 <% } -%>

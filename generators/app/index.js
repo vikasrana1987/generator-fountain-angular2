@@ -27,7 +27,7 @@ module.exports = fountain.Base.extend({
         name: 'router',
         message: 'Would you like a router?',
         choices: [
-          // {name: '@angular/router', value: 'router'},
+          {name: '@angular/router', value: 'router'},
           {name: 'Angular UI Router', value: 'uirouter'},
           {name: 'None', value: 'none'}
         ]
@@ -88,7 +88,7 @@ module.exports = fountain.Base.extend({
       if (this.props.router === 'router') {
         this.mergeJson('package.json', {
           dependencies: {
-            '@angular/router': '2.0.0-rc.1'
+            '@angular/router': '3.0.0-alpha.3'
           }
         });
       } else if (this.props.router === 'uirouter') {
@@ -120,8 +120,8 @@ module.exports = fountain.Base.extend({
   },
 
   writing() {
-    if (this.props.router === 'uirouter') {
-      this.copyTemplate('src/routes.js', 'src/routes.js', this.props);
+    if (this.props.router !== 'none') {
+      this.copyTemplate(`src/${this.props.router}/routes.js`, 'src/routes.js', this.props);
     }
     this.copyTemplate('src/index.html', 'src/index.html', {router: this.props.router});
   }
